@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HSC GPA Calculator Bangladesh | এইচএসসি জিপিএ ক্যালকুলেটর</title>
+<meta name="description" content="Free HSC GPA calculator for Bangladesh. Enter your marks and get your GPA and grade instantly. বিনামূল্যে এইচএসসি জিপিএ ক্যালকুলেটর - নম্বর দিয়ে জিপিএ হিসাব করুন।">
+<meta name="keywords" content="HSC GPA calculator, HSC GPA calculator Bangladesh, এইচএসসি জিপিএ ক্যালকুলেটর, HSC result GPA calculate, 4th subject GPA">
+<meta property="og:title" content="HSC GPA Calculator Bangladesh">
+<meta property="og:description" content="Calculate your HSC GPA free, with 4th subject rule.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How is HSC GPA calculated?","acceptedAnswer":{"@type":"Answer","text":"Add the grade points of all main subjects plus the 4th subject points above 2, then divide by the number of main subjects. Maximum is 5.00."}},{"@type":"Question","name":"How does the 4th subject work in HSC?","acceptedAnswer":{"@type":"Answer","text":"Only the grade point above 2.00 is added to your total. For example, GP 5.00 in the 4th subject adds 3.00."}}]}</script>
+<style>
+:root{--bg:#f3f6f1;--card:#fff;--ink:#14281d;--mute:#5d6f64;--line:#d6ded8;--green:#006a4e;--red:#c8102e;--soft:#e4efe8;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1b15;--card:#172820;--ink:#e8f1ec;--mute:#93a79b;--line:#2b4036;--green:#3fc79a;--red:#ff6b7f;--soft:#1f3429}}
+:root[data-theme="dark"]{--bg:#0f1b15;--card:#172820;--ink:#e8f1ec;--mute:#93a79b;--line:#2b4036;--green:#3fc79a;--red:#ff6b7f;--soft:#1f3429}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Hind Siliguri","Segoe UI",system-ui,sans-serif}
+main{max-width:560px;margin:0 auto;padding:18px 16px 40px}
+h1{font-size:1.5rem;margin:0 0 2px;letter-spacing:-.01em}
+p.sub{margin:0 0 16px;color:var(--mute);font-size:.92rem}
+.result{background:var(--green);color:#fff;border-radius:18px;padding:18px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+:root[data-theme="dark"] .result,:root:not([data-theme="light"]) .result{color:#06251a}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .result{color:#fff}}
+.result.fail{background:var(--red);color:#fff}
+.gpa{font-size:3.2rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.lg{font-size:1.5rem;font-weight:600;text-align:right}
+.lg small{display:block;font-size:.8rem;font-weight:400;opacity:.85}
+.groups{display:flex;gap:6px;margin-bottom:12px}
+.groups button{flex:1;padding:9px 4px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;font:inherit;font-size:.9rem;cursor:pointer}
+.groups button[aria-pressed=true]{background:var(--green);border-color:var(--green);color:#fff}
+.row{display:grid;grid-template-columns:1fr 78px 46px;gap:8px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin-bottom:8px}
+.row.fourth{border-color:var(--green);background:var(--soft)}
+.row input[type=text]{border:0;background:transparent;color:var(--ink);font:inherit;width:100%;min-width:0;padding:4px 0}
+.row input[type=number]{width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;text-align:center}
+.g{text-align:center;font-weight:600}
+.meta{grid-column:1/-1;display:flex;gap:14px;font-size:.82rem;color:var(--mute)}
+.meta label{display:flex;align-items:center;gap:5px;cursor:pointer}
+.meta .x{margin-left:auto;color:var(--red);background:none;border:0;font:inherit;cursor:pointer}
+.add{width:100%;padding:10px;border:1px dashed var(--line);background:none;color:var(--green);border-radius:12px;font:inherit;cursor:pointer;margin:2px 0 14px}
+.note{font-size:.82rem;color:var(--mute);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.note b{color:var(--ink)}
+table{width:100%;border-collapse:collapse;margin-top:6px;font-size:.82rem}
+td,th{padding:3px 4px;text-align:left;border-bottom:1px solid var(--line)}
+:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+</style>
+</head>
+<body>
+<main>
+<h1>HSC GPA Calculator Bangladesh <span style="font-weight:400;font-size:1rem;display:block;color:var(--mute)">এইচএসসি জিপিএ ক্যালকুলেটর</span></h1>
+<p class="sub">Bangladesh Education Boards · enter your subject marks to estimate your GPA.</p>
+
+<div class="result" id="res" aria-live="polite">
+  <div><div class="gpa" id="gpa">0.00</div><div id="msg" style="font-size:.85rem;opacity:.9">Enter marks to begin</div></div>
+  <div class="lg" id="lg">–<small>Letter grade</small></div>
+</div>
+
+<div class="groups" id="groups" role="group" aria-label="Group"></div>
+<div id="rows"></div>
+<button class="add" id="add">+ Add subject</button>
+
+<div class="note">
+  <b>How it works.</b> Enter each subject's <b>combined marks out of 100</b> (if papers are out of 200, divide by 2). GPA = total grade points ÷ number of main subjects. For the <b>4th subject</b>, only points above 2 are counted (GP − 2). Failing any main subject means no GPA (fail).
+  <table>
+    <tr><th>Marks</th><th>Grade</th><th>GP</th></tr>
+    <tr><td>80–100</td><td>A+</td><td>5.00</td></tr>
+    <tr><td>70–79</td><td>A</td><td>4.00</td></tr>
+    <tr><td>60–69</td><td>A−</td><td>3.50</td></tr>
+    <tr><td>50–59</td><td>B</td><td>3.00</td></tr>
+    <tr><td>40–49</td><td>C</td><td>2.00</td></tr>
+    <tr><td>33–39</td><td>D</td><td>1.00</td></tr>
+    <tr><td>0–32</td><td>F</td><td>0.00</td></tr>
+  </table>
+  <p style="margin:8px 0 0">This is an estimate. Boards also require passing the theory and practical parts separately, so tick “Failed a part” if that happened. Your official result is what counts.</p>
+</div>
+<section class="note" style="margin-top:14px">
+<h2 style="font-size:1.05rem;margin:0 0 6px;color:var(--ink)">How HSC GPA is calculated</h2>
+<p>Each subject's marks become a grade point (A+ = 5.00, A = 4.00, A− = 3.50, B = 3.00, C = 2.00, D = 1.00, F = 0). Add the grade points of your main subjects, add the 4th subject points above 2, then divide by the number of main subjects. The highest GPA is 5.00. A fail (F) in any main subject means no GPA.</p>
+<h2 style="font-size:1.05rem;margin:10px 0 6px;color:var(--ink)">এইচএসসি জিপিএ কীভাবে হিসাব হয়</h2>
+<p>প্রতিটি বিষয়ের নম্বর অনুযায়ী গ্রেড পয়েন্ট ধরা হয় (A+ = ৫, A = ৪, A− = ৩.৫, B = ৩, C = ২, D = ১)। সব আবশ্যিক বিষয়ের পয়েন্ট যোগ করুন, ৪র্থ বিষয়ে ২-এর বেশি পয়েন্ট যোগ করুন, তারপর আবশ্যিক বিষয়ের সংখ্যা দিয়ে ভাগ করুন। কোনো আবশ্যিক বিষয়ে F পেলে জিপিএ হবে না।</p>
+<h2 style="font-size:1.05rem;margin:10px 0 6px;color:var(--ink)">FAQ</h2>
+<p><b>What is the 4th subject rule?</b> Only the grade point above 2.00 counts. GP 5.00 adds 3.00 to your total.</p>
+<p><b>Is this the official result?</b> No. It is an estimate. Check your board's official result.</p>
+</section>
+</main>
+
+<script>
+const PRESETS={
+  "Science":["Bangla","English","ICT","Physics","Chemistry","Higher Math"],
+  "Business":["Bangla","English","ICT","Accounting","Business Org.","Finance & Banking","Production Mgmt."],
+  "Humanities":["Bangla","English","ICT","Economics","Civics","Social Work","Sociology"]
+};
+let group="Science",subs=[],fourth=5;
+const $=id=>document.getElementById(id);
+
+function grade(m){
+  if(m>=80)return["A+",5];if(m>=70)return["A",4];if(m>=60)return["A−",3.5];
+  if(m>=50)return["B",3];if(m>=40)return["C",2];if(m>=33)return["D",1];return["F",0];
+}
+function load(g){
+  group=g;subs=PRESETS[g].map(n=>({n,m:"",f:false}));
+  fourth=subs.length-1;render();
+}
+function render(){
+  $("groups").innerHTML=Object.keys(PRESETS).map(g=>`<button aria-pressed="${g===group}" data-g="${g}">${g}</button>`).join("");
+  $("rows").innerHTML=subs.map((s,i)=>`
+  <div class="row ${i===fourth?'fourth':''}">
+    <input type="text" value="${s.n.replace(/"/g,'&quot;')}" data-i="${i}" data-k="n" aria-label="Subject name">
+    <input type="number" inputmode="decimal" min="0" max="100" placeholder="/100" value="${s.m}" data-i="${i}" data-k="m" aria-label="Marks">
+    <div class="g" id="g${i}">–</div>
+    <div class="meta">
+      <label><input type="radio" name="f" ${i===fourth?'checked':''} data-i="${i}" data-k="4"> 4th subject</label>
+      <label><input type="checkbox" ${s.f?'checked':''} data-i="${i}" data-k="f"> Failed a part</label>
+      <button class="x" data-i="${i}" data-k="x" aria-label="Remove subject">Remove</button>
+    </div>
+  </div>`).join("");
+  calc();
+}
+function calc(){
+  let total=0,main=0,fail=false,filled=0,ext=0;
+  subs.forEach((s,i)=>{
+    const has=s.m!=="";
+    let el=$("g"+i);
+    if(!has){el.textContent="–";return}
+    filled++;
+    let [l,gp]=grade(+s.m);
+    if(s.f){l="F";gp=0}
+    el.textContent=l;el.style.color=l==="F"?"var(--red)":"inherit";
+    if(i===fourth){ext=Math.max(0,gp-2)}
+    else{main++;total+=gp;if(gp===0)fail=true}
+  });
+  const all=subs.filter((s,i)=>i!==fourth).length;
+  const res=$("res");res.classList.remove("fail");
+  if(!filled){$("gpa").textContent="0.00";$("lg").innerHTML="–<small>Letter grade</small>";$("msg").textContent="Enter marks to begin";return}
+  if(fail){res.classList.add("fail");$("gpa").textContent="0.00";$("lg").innerHTML="F<small>Failed</small>";$("msg").textContent="Failed a main subject";return}
+  let g=(total+ext)/Math.max(main,1);
+  g=Math.min(5,g);
+  const L=g>=5?"A+":g>=4?"A":g>=3.5?"A−":g>=3?"B":g>=2?"C":g>=1?"D":"F";
+  $("gpa").textContent=g.toFixed(2);
+  $("lg").innerHTML=L+"<small>Letter grade</small>";
+  $("msg").textContent=main<all?`Based on ${main} of ${all} main subjects so far`:"Estimated GPA (out of 5.00)";
+}
+document.addEventListener("click",e=>{
+  const t=e.target;
+  if(t.dataset.g){load(t.dataset.g)}
+  if(t.dataset.k==="x"){const i=+t.dataset.i;subs.splice(i,1);if(fourth===i)fourth=subs.length-1;else if(fourth>i)fourth--;render()}
+  if(t.id==="add"){subs.push({n:"New subject",m:"",f:false});render()}
+});
+document.addEventListener("change",e=>{
+  const t=e.target,i=+t.dataset.i;
+  if(t.dataset.k==="4"){fourth=i;render()}
+  if(t.dataset.k==="f"){subs[i].f=t.checked;calc()}
+});
+document.addEventListener("input",e=>{
+  const t=e.target,i=+t.dataset.i;
+  if(t.dataset.k==="m"){
+    let v=t.value;if(v!==""&&+v>100){v="100";t.value=v}
+    subs[i].m=v;calc();
+  }
+  if(t.dataset.k==="n"){subs[i].n=t.value}
+});
+load("Science");
+</script>
+</body>
+</html>
